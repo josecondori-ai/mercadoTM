@@ -1,0 +1,16 @@
+<%-include('../partials/head')-%>
+<h1 class="text-center mt-5 mb-3">Login</h1>
+<div class="container w-25">
+    <form action="/login" method="post">
+        <div class="form-group px-0">
+            <input type="email" name="email" class="form-control" placeholder="Ingrese su Email">
+        </div>
+        <div class="form-group px-0">
+            <input type="password" name="password" class="form-control" placeholder="password   ">
+        </div>
+        <a class="float-right mt-0 mb-3 text-danger" href="/olvide">Olvidaste tu contraseña?</a>
+        <button type="submit" class="btn btn-danger btn-block">Ingrese</button>
+    </form>
+</div>
+
+<%-include('../partials/footer')-%>
