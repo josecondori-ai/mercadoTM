@@ -1,0 +1,18 @@
+<%-include('../partials/head')-%>
+
+<div class="col-9">
+    <div class="container p-3 w-50">
+        <h1 class="text-center mt-5 mb-3">Actualizar usuario</h1>
+        <form action="/edit" method="post">
+            <div class="form-group px-0">
+                <input type="user" name="user" class="form-control" placeholder="Ingrese su usuario">
+            </div>
+            <div class="form-group px-0">
+                <input type="email" name="email" class="form-control" placeholder="Ingrese su Email">
+            </div>
+            <button type="submit" class="btn btn-danger btn-block">Actualizar</button>
+
+        </form>
+</div>
+
+<%-include('../partials/footer')-%>

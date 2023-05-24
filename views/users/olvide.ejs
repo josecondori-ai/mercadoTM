@@ -1,0 +1,12 @@
+<%-include('../partials/head')-%>
+
+<h1 class="text-center mt-5 mb-3">Olvide la contraseña</h1>
+<div class="container w-25">
+    <form action="/olvide" method="post">
+        <div class="form-group px-0">
+            <input type="email" name="email" class="form-control" placeholder="Ingrese su Email">
+        </div>
+        <button type="submit" class="btn btn-danger btn-block">Enviar al email</button>
+        <a class="float-right" href="/login"> Regresar al login</a>
+    </form>
+    <%-include('../partials/footer')-%>

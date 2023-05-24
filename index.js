@@ -5,7 +5,7 @@ import mongoose from 'mongoose'
 import passport from 'passport'
 import morgan from 'morgan'
 
-import userRoutes from ('./routes/users')
+// import userRoutes from './routes/users.js'
 
 
 
@@ -21,11 +21,18 @@ app.use(express.static('public'))
 
 
  app.get('/',(req,res)=>{
-    res.render('pages/index')
+    res.render('users/edituser')
  })
 
-app.use(userRoutes)
+// app.use(userRoutes)
 
-app.listen(3035,()=>{
+dotenv.config({path:'./config.env'})
+
+mongoose.connect(process.env.DATABASE,{
+
+})
+
+
+app.listen(process.env.PORT,()=>{
     console.log('servidor inciado')
 })

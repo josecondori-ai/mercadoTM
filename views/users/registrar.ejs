@@ -1,0 +1,20 @@
+<%-include('../partials/head')-%>
+<div class="col-9">
+    <div class="container p-3 w-50">
+        <h1 class="text-center mt-5 mb-3">Resgistar</h1>
+        <form action="/registrar" method="post">
+            <div class="form-group px-0">
+                <input type="text" name="name" class="form-control" placeholder="Ingrese su nombre">
+            </div>
+            <div class="form-group px-0">
+                <input type="email" name="email" class="form-control" placeholder="Ingrese su Email">
+            </div>
+            <div class="form-group px-0">
+                <input type="password" name="password" class="form-control" placeholder="Ingrese su password">
+            </div>
+            <button type="submit" class="btn btn-danger btn-block">Registrar</button>
+
+
+        </form>
+
+        <%-include('../partials/footer')-%>
