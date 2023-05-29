@@ -5,7 +5,8 @@ import mongoose from 'mongoose'
 import passport from 'passport'
 import morgan from 'morgan'
 
-// import userRoutes from './routes/users.js'
+import {router} from './routes/users.js'
+
 
 
 
@@ -17,13 +18,15 @@ app.use(bodyParser.urlencoded({extended:true}))
 app.set('view engine','ejs')
 app.use(express.static('public'))
 
+app.use(router)
+
+// ruta para ver como queda el diseño
+//  app.get('/',(req,res)=>{
+//     res.render('admin/dashboard')
+//  })
 
 
-
- app.get('/',(req,res)=>{
-    res.render('users/edituser')
- })
-
+ 
 // app.use(userRoutes)
 
 dotenv.config({path:'./config.env'})
