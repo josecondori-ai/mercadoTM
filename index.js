@@ -4,11 +4,13 @@ import dotenv from  'dotenv'
 import mongoose from 'mongoose'
 import passport from 'passport'
 import morgan from 'morgan'
+import LocalStrategy from 'passport-local'
+import flash from 'connect-flash'
 
 import {router} from './routes/users.js'
 
 
-
+import User from './models/usermodel.js'
 
 const app =express()
 app.use(morgan('dev'))
@@ -32,8 +34,23 @@ app.use(router)
 dotenv.config({path:'./config.env'})
 
 mongoose.connect(process.env.DATABASE,{
-
+    useNewUrlParser:true,
+    useUnifiedTopology:true,
+    useCreateIndex :true
 })
+.then(mensaje=>{
+    console.log('se conecto a la base')
+})
+
+app.use(passport.initialize())
+app.use(passport.session())
+//passport.use(new LocalStrategy({usernameField: 'email'},User.authenticate()));
+
+//middleware de mensaje flash
+app.use(flash())
+
+//configurar los mensaje globales
+//app.use(())
 
 
 app.listen(process.env.PORT,()=>{
