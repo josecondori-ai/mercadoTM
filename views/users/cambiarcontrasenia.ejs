@@ -1,0 +1,14 @@
+<%- include('../partials/header') -%>
+<div class="col-9">
+    <div class="container p-3 w-50">
+        <h1>cambiar contraseña</h1>
+        <form action="/password/cambiar" method="post">
+            <div class="form-group px-0">
+                <input type="password" name="password" class="form-control" placeholder="Password">
+            </div>
+    
+            <div class="form-group px-0">
+                <input type="password" name="confirmpassword" class="form-control" placeholder="Confirm Password">
+            </div>
+            <button type="submit" class="btn btn-danger btn-block"> cambiar password</button>
+        </form>
