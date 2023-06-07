@@ -15,6 +15,11 @@ router.get('/login',(req,res)=>{
     res.render('users/login')
  })
 
+ router.get('/registrar',(req,res)=>{
+    res.render('users/registrar')
+ })
+ 
+
  router.post('/login',passport.authenticate('local',{
         successRedirect:'/dashboard',
         failureRedirect:'/login',
@@ -34,11 +39,11 @@ router.get('/login',(req,res)=>{
      }
 User.register(userData,password,(error,user)=>{
     if(error){
-        req.flash('error_msg','ERROR:'+error)
+        // req.flash('error_msg','ERROR:'+error)
         res.redirect('/registrar')
     }
-   req.flash('success_msg','Cuenta creada')
-    res.render('users/registrar')
+//    req.flash('success_msg','Cuenta creada')
+    res.render('users/login')
 })
     
  })
@@ -46,7 +51,7 @@ User.register(userData,password,(error,user)=>{
  //cerrar sesion
  router.get('/loguot',(req,res)=>{
     req.logOut()
-    req.flash('success_msg','Se cerro la sesion')
+   // req.flash('success_msg','Se cerro la sesion')
     //enviar o mostrar mensaje de salida de sesion
     res.redirect('/login',{salio:salio})
  })
