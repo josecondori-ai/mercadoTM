@@ -8,7 +8,7 @@ import LocalStrategy from 'passport-local'
 import flash from 'connect-flash'
 import {router} from './routes/users.js'
 import User from './models/usermodel.js'
-
+//soy un comentario
 const app =express()
 //morgan para mirar las peticiones 
 app.use(morgan('dev'))
