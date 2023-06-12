@@ -1,6 +1,10 @@
 import express from 'express'
 const router=express.Router()
 import passport from 'passport'
+import crypto from 'crypto'
+import async from 'async'
+import nodemailer from 'nodemailer'
+
 
 
 
@@ -9,7 +13,7 @@ import passport from 'passport'
 import User from '../models/usermodel.js'
 
 
-//USUARIOS
+//Get
 
 router.get('/login',(req,res)=>{
     res.render('users/login')
@@ -18,20 +22,53 @@ router.get('/login',(req,res)=>{
  router.get('/registrar',(req,res)=>{
     res.render('users/registrar')
 })
+
 router.get('/loguot',(req,res)=>{
     req.logOut()
       // req.flash('success_msg','Se cerro la sesion')
        //enviar o mostrar mensaje de salida de sesion
-       res.redirect('/login',{salio:salio})
+       res.redirect('/login')
     })
-
+    
     router.get('/olvide',(req,res)=>{
         res.render('users/olvide')
-     })
+    })
+    
+    //get cambiarpassword
+    
+    
+    
+    router.get('/alluser',(req,res)=>{
+       User.find({})
+           .then(users=>{
+               res.render('users/alluser',{users:users})
+            })
+            .catch(error=>{
+               //mensaje del error para administrador
+               res.redirect('users/alluser')
+    
+            })
+    })
     
 
+    //get editar usuario
 
-
+    router.get('/edituser/:id',(req,res)=>{
+       let buscarId={_id:req.params.id}
+       User.findOne(buscarId)
+           .then(user=>{
+               res.render('/users/edituser',{user:user})
+           })
+           .catch(error=>{
+               //mensaje del error
+               res.redirect('users/allusers')
+           })
+       
+       
+    })
+    
+    //POST
+    
 
 router.post('/login',passport.authenticate('local',{
     successRedirect:'/dashboard',
@@ -70,32 +107,8 @@ router.post('/registrar',(req,res)=>{
  
 
 //todos los usuarios
- router.get('/alluser',(req,res)=>{
-    User.find({})
-        .then(users=>{
-            res.render('users/alluser',{users:users})
-        })
-        .catch(error=>{
-            //mensaje del error para administrador
-            res.redirect('users/alluser')
-
-        })
- })
 
 
- router.get('/edituser/:id',(req,res)=>{
-    let buscarId={_id:req.params.id}
-    User.findOne(buscarId)
-        .then(user=>{
-            res.render('/users/edituser',{user:user})
-        })
-        .catch(error=>{
-            //mensaje del error
-            res.redirect('users/allusers')
-        })
-    
-    
- })
 
 router.delete('/eliminar/users/:id',(req,res)=>{
     let buscarId={_id:req.params.id}
@@ -134,11 +147,6 @@ router.post('/cambiarcontrasenia',(req,res)=>{
     })
     
 })
-/*fetch('llamo a la api') 
-then(response=>response)
-*/
 
-
-//  export default router
 
 export {router}
