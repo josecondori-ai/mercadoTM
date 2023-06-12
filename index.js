@@ -29,7 +29,7 @@ dotenv.config({path:'./config.env'})
 mongoose.connect(process.env.DATABASE,{
     useNewUrlParser:true,
     useUnifiedTopology:true,
-    useCreateIndex :true
+    // useCreateIndex :true
 })
 .then(mensaje=>{
     console.log('se conecto a la base')
@@ -42,10 +42,18 @@ app.use(session({
 }))
 app.use(passport.initialize())
 app.use(passport.session())
-passport.use(new LocalStrategy({usernameField:'email'}))
+passport.use(new LocalStrategy({usernameField:'email'},User.authenticate()))
+//en la base esta la persona con email pepe@gmail.com es true
 
 
 app.use(flash())
+app.use((req,res,next)=>{
+    res.locals.success_msg=req.flash(('success_msg'))
+    res.locals.error_msg=req.flash(('error_msg'))
+    res.locals.error=req.flash(('error'))
+    res.locals.currentUser=req.user
+    next()
+})
 
 
 app.use(bodyParser.urlencoded({extended:true}))

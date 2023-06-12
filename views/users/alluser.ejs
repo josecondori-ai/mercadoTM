@@ -2,6 +2,7 @@
 <div  class="col-9">
     <div class="container p-3 w-100">
         <h1 class="mt-5 mb-4">Todos los usuarios</h1>
+        <%-include('../partials/messages')-%>
         <table  class="table table-bordered " width="100%">
             <thead>
                 <tr>
@@ -11,12 +12,12 @@
                 </tr>
             </thead>
             <tbody>
-                <%users.forEach(user=>{
+                <%users.forEach(user=>{%>
                     <tr>
                         <td><%=user.name%></td>
                         <td><%=user.email%></td>
                         <td><a class="btn btn-primary" href="/edituser/<%=user.id%>">editar</a>  
-                            <form action="/eliminar/user" method="post">
+                            <form action="/eliminar/users/<%=user.id%>?_method=delete" method="post">
     
                                 <button type="submit" class="btn btn-danger ml-2">eliminar</button>  
                             </form>

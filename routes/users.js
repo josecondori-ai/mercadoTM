@@ -13,20 +13,28 @@ import nodemailer from 'nodemailer'
 import User from '../models/usermodel.js'
 
 
+
+
+function eselUsuario(req,res){
+    if(req.isAuthenticated()){
+        return next()
+    }
+    req.flash('error_msg','por favor logueate en la pagina')
+    res.redirect('login')
+}
 //Get
 
 router.get('/login',(req,res)=>{
     res.render('users/login')
  })
 
- router.get('/registrar',(req,res)=>{
+ router.get('/registrar',eselUsuario,(req,res)=>{
     res.render('users/registrar')
 })
 
 router.get('/loguot',(req,res)=>{
     req.logOut()
-      // req.flash('success_msg','Se cerro la sesion')
-       //enviar o mostrar mensaje de salida de sesion
+      req.flash('success_msg','Se cerro la sesion')
        res.redirect('/login')
     })
     
@@ -38,13 +46,13 @@ router.get('/loguot',(req,res)=>{
     
     
     
-    router.get('/alluser',(req,res)=>{
+    router.get('/alluser',eselUsuario,(req,res)=>{
        User.find({})
            .then(users=>{
                res.render('users/alluser',{users:users})
             })
             .catch(error=>{
-               //mensaje del error para administrador
+               req.flash('error_msg','Error',error)
                res.redirect('users/alluser')
     
             })
@@ -57,11 +65,11 @@ router.get('/loguot',(req,res)=>{
        let buscarId={_id:req.params.id}
        User.findOne(buscarId)
            .then(user=>{
-               res.render('/users/edituser',{user:user})
+               res.render('users/edituser',{user:user})
            })
            .catch(error=>{
-               //mensaje del error
-               res.redirect('users/allusers')
+            req.flash('error_msg','Error',error)
+            res.redirect('users/allusers')
            })
        
        
@@ -90,10 +98,11 @@ router.post('/registrar',(req,res)=>{
 
     User.register(userData,password,(error,user)=>{
         if(error){
-            // req.flash('error_msg','ERROR:'+error)
+            req.flash('error_msg','Error',error)
+
             res.redirect('/registrar')
         }
-    //    req.flash('success_msg','Cuenta creada')
+       req.flash('success_msg','Cuenta creada')
         res.render('users/login')
     })
 
@@ -114,11 +123,11 @@ router.delete('/eliminar/users/:id',(req,res)=>{
     let buscarId={_id:req.params.id}
     User.deleteOne(buscarId)
     .then(user=>{
-        //mensaje se borro con exito
+        req.flash('success_msg','usuario eliminado')
         res.redirect('users/allusers')
     })
     .catch(error=>{
-        //mensaje error en la base
+        req.flash('error_msg','ERROR:',error)
         res.redirect('users/allusers')
 
     })
@@ -136,12 +145,12 @@ router.post('/cambiarcontrasenia',(req,res)=>{
         dato.setPassword(req.body.password,error=>{
             dato.save()
             .then(info=>{
-                //mensaje todo ok
+                req.flash('success_msg','el password fue cambiado')
                 res.redirect('/cambiarcontrasenia')
             })
         })
         .catch(error=>{
-            //mensaje error
+            req.flash('error_msg','ERROR:',error)
             res.redirect('/cambiarcontrasenia')
         })
     })
